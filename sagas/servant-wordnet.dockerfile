@@ -12,4 +12,8 @@ ENV PATH="/pi/stack:/pi/ws/sagas-ai:$PATH"
 ENV PYTHONPATH="/pi/stack:/pi/ws/sagas-ai:$PYTHONPATH"
 
 WORKDIR /pi/stack
+## == end ==
+
+EXPOSE 8093
+CMD python -m sagas.nlu.words_servant
 

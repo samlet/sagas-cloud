@@ -26,6 +26,15 @@ function archive_source(){
 	cd /pi/archive/sagas
 }
 
+function ensure_archive(){
+	read -p "archive sources? [y/n]" -n 1 -r
+	echo    # (optional) move to a new line
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		archive_source
+	fi
+}
+
 # startup 
 if [ $# -lt 1 ]; then	
 	echo "available opts: all, zk, storm, repl, ..."
@@ -51,6 +60,7 @@ else
 		;;
 	"push-servants")
 		push_image samlet/servant_wordnet:0.1
+		push_image samlet/servant_stack:0.1
 		;;
 
 	"build-wordnet")
@@ -65,6 +75,9 @@ else
 			mv data-nltk-ext /pi/build-ctx/
 		fi		
 		;;
+	"build-stack")
+		docker build -t samlet/sagas_stack:0.1 -f sagas-stack.dockerfile .
+		;;
 	"build-source")
 		archive_source
 
@@ -72,18 +85,20 @@ else
 		docker build -t samlet/sagas_source:0.1 -f sagas-source.dockerfile .		
 		;;
 	"build-servants")
-		read -p "archive sources? [y/n]" -n 1 -r
-		echo    # (optional) move to a new line
-		if [[ $REPLY =~ ^[Yy]$ ]]
-		then
-			archive_source
-		fi
-
+		ensure_archive
 		docker build -t samlet/servant_wordnet:0.1 -f servant-wordnet.dockerfile .
+		docker build -t samlet/servant_stack:0.1 -f servant-stack.dockerfile .
+		;;
+	"build-tool")
+		ensure_archive
+		docker build -t samlet/sagas_tool:0.1 -f sagas-tool.dockerfile .
 		;;
 
 	"list")
 		docker run --rm samlet/servant_wordnet:0.1 bash -c 'tree /pi'
+		;;
+	"stack-bash")
+		docker run --rm -it -v /pi/stack:/pi/stack samlet/servant_stack:0.1 bash
 		;;
 	*)
 		# default proc

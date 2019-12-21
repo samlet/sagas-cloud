@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  serv_wordnet:
+    image: registry.cn-hangzhou.aliyuncs.com/samlet/servant_wordnet:0.1
+    ports:
+      - 8093:8093
+      
+  serv_stack:
+    image: registry.cn-hangzhou.aliyuncs.com/samlet/servant_stack:0.1
+    ports:
+      - 14000:14000
+

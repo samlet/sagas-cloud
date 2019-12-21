@@ -1,0 +1,3 @@
+#!/bin/bash
+docker build -t samlet/sagas_stack:0.1 -f sagas-stack.dockerfile .
+

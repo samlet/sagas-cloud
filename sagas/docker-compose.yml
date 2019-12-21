@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  # rasa_container:
+  #   image: rasa/rasa:1.6.0-spacy-en
+  sagas_container:
+    image: samlet/sagas_stack:0.1
+    ports:
+      - 1919:1919
+      - 14000:14000
+      - 8093:8093
+    volumes:
+      - /pi/stack:/pi/stack
+      - ~/nltk_data:/usr/local/nltk_data
+      - /pi/ai/nltk/data:/pi/ai/nltk/data
+    working_dir: /pi/stack
+    # command: python -m test.simple_serv
+    # command: python -m sagas.tests.sanic.simple
+    command: python -m sagas.nlu.words_servant
+
+
+

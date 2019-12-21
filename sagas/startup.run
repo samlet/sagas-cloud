@@ -15,6 +15,17 @@ function push_image(){
 	docker rmi registry.cn-hangzhou.aliyuncs.com/$image
 }
 
+function archive_source(){
+	rm -f sagas-stack-0.1.tar.gz
+	rm -f sagas-saai-0.1.tar.gz
+
+	echo 'archive ..'
+	cd /pi/stack && git archive --prefix=stack/ -o /pi/archive/sagas/sagas-stack-0.1.tar.gz HEAD		
+	cd /pi/ws/sagas-ai && git archive --format=tar --prefix=sagas-ai/ HEAD | gzip >/pi/archive/sagas/sagas-saai-0.1.tar.gz
+	
+	cd /pi/archive/sagas
+}
+
 # startup 
 if [ $# -lt 1 ]; then	
 	echo "available opts: all, zk, storm, repl, ..."
@@ -27,12 +38,52 @@ else
 	"inventory")
 		start_inventory
 		;;
+
 	"push-base")
 		image=samlet/sagas_base:0.1
 		push_image $image
 		;;
 	"push-stack")
 		push_image samlet/sagas_stack:0.1
+		;;
+	"push-wordnet")
+		push_image samlet/sagas_wordnet:0.1
+		;;
+	"push-servants")
+		push_image samlet/servant_wordnet:0.1
+		;;
+
+	"build-wordnet")
+		read -p "Are you sure to rebuild wordnet image? " -n 1 -r
+		echo    # (optional) move to a new line
+		if [[ $REPLY =~ ^[Yy]$ ]]
+		then
+		    mv /pi/build-ctx/data-nltk-ext ./
+			mv /pi/build-ctx/data-nltk ./
+			docker build -t samlet/sagas_wordnet:0.1 -f sagas-wordnet.dockerfile .
+			mv data-nltk /pi/build-ctx/
+			mv data-nltk-ext /pi/build-ctx/
+		fi		
+		;;
+	"build-source")
+		archive_source
+
+		echo 'dockerize ..'
+		docker build -t samlet/sagas_source:0.1 -f sagas-source.dockerfile .		
+		;;
+	"build-servants")
+		read -p "archive sources? [y/n]" -n 1 -r
+		echo    # (optional) move to a new line
+		if [[ $REPLY =~ ^[Yy]$ ]]
+		then
+			archive_source
+		fi
+
+		docker build -t samlet/servant_wordnet:0.1 -f servant-wordnet.dockerfile .
+		;;
+
+	"list")
+		docker run --rm samlet/servant_wordnet:0.1 bash -c 'tree /pi'
 		;;
 	*)
 		# default proc

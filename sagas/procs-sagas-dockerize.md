@@ -19,3 +19,11 @@ $ alias sid="python -m sagas.tool.misc trans_clip id 'en;zh-CN;ja' en False"
 $ sid 'Kami tak boleh berbicara.'
 ```
 
++ zh
+
+```sh
+$ start zh-bash
+$ python -m sagas.zh.ltp_checker procs '中国进出口银行与中国银行加强合作。'
+```
+
+

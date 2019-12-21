@@ -1,4 +1,6 @@
-FROM samlet/sagas_stack:0.1
+FROM samlet/langpack_zh:0.1
+
+RUN pip install Flask cachetools PyYAML waitress
 
 ## == sources ==
 RUN mkdir -p /pi/
@@ -14,7 +16,7 @@ ENV PYTHONPATH="/pi/stack:/pi/ws/sagas-ai:$PYTHONPATH"
 WORKDIR /pi/stack
 ## == end ==
 
-EXPOSE 14000
-CMD python -m sagas.nlu.parse_servant run 14000
+EXPOSE 14005
+CMD python -m sagas.nlu.parse_servant run 14005
 
 

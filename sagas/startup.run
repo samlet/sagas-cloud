@@ -62,6 +62,9 @@ else
 		push_image samlet/servant_wordnet:0.1
 		push_image samlet/servant_stack:0.1
 		;;
+	"push-zh")
+		push_image samlet/langpack_zh:0.1
+		;;
 
 	"build-wordnet")
 		read -p "Are you sure to rebuild wordnet image? " -n 1 -r
@@ -78,14 +81,22 @@ else
 	"build-stack")
 		docker build -t samlet/sagas_stack:0.1 -f sagas-stack.dockerfile .
 		;;
+	"build-builder")
+		docker build -t samlet/sagas_builder:0.1 -f sagas-builder.dockerfile .
+		;;
 	"build-source")
 		archive_source
 
 		echo 'dockerize ..'
 		docker build -t samlet/sagas_source:0.1 -f sagas-source.dockerfile .		
 		;;
+	"check-zh")
+		docker build -t samlet/servant_zh:0.1 -f servant-zh.dockerfile .
+		docker run --rm -it -w /pi/stack -v /pi/stack:/pi/stack samlet/servant_zh:0.1 python -m sagas.nlu.parse_servant run 14005
+		;;
 	"build-servants")
 		ensure_archive
+		docker build -t samlet/servant_zh:0.1 -f servant-zh.dockerfile .
 		docker build -t samlet/servant_wordnet:0.1 -f servant-wordnet.dockerfile .
 		docker build -t samlet/servant_stack:0.1 -f servant-stack.dockerfile .
 		;;
@@ -93,12 +104,25 @@ else
 		ensure_archive
 		docker build -t samlet/sagas_tool:0.1 -f sagas-tool.dockerfile .
 		;;
+	"build-zh")
+		docker build -t samlet/langpack_zh:0.1 -f langpack-zh.dockerfile .
+		;;
 
 	"list")
 		docker run --rm samlet/servant_wordnet:0.1 bash -c 'tree /pi'
 		;;
 	"stack-bash")
 		docker run --rm -it -v /pi/stack:/pi/stack samlet/servant_stack:0.1 bash
+		;;
+	"zh-bash")
+		docker run --rm -it -w /pi/stack -v /pi/stack:/pi/stack samlet/langpack_zh:0.1 bash
+		;;
+	"clear-remotes")
+		array=( samlet/servant_wordnet:0.1  samlet/servant_stack:0.1 )
+		for image in "${array[@]}"
+		do
+			docker rmi registry.cn-hangzhou.aliyuncs.com/$image
+		done		
 		;;
 	*)
 		# default proc

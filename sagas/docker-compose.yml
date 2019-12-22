@@ -1,5 +1,4 @@
-version: '2'
-
+version: '3.0'
 services:
   duckling:
     # image: rasa/duckling:latest
@@ -38,6 +37,25 @@ services:
     image: samlet/servant_zh:0.1
     ports:
       - 14005:14005
+
+  ### agents and actions
+  agent_servant:
+    image: samlet/servant_stack:0.1
+    volumes:
+      - /pi/stack:/pi/stack
+      - /pi/ws/sagas-ai:/pi/ws/sagas-ai
+    environment:
+      - runtime=docker
+    ports:
+      - 18099:18099
+    working_dir: /pi/ws/sagas-ai
+    command: python -m saai.agent_servant app
+
+  genesis_actions:
+    image: rasa/rasa-sdk:latest
+    volumes:
+      - /pi/ws/sagas-ai/bots/genesis/actions:/app/actions
+
 
 
 

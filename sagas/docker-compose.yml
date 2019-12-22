@@ -2,7 +2,8 @@ version: '2'
 
 services:
   duckling:
-    image: rasa/duckling:latest
+    # image: rasa/duckling:latest
+    image: samlet/duckling:2019-12-22
     ports:
       - "8000:8000"
 

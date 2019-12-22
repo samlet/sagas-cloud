@@ -26,4 +26,10 @@ $ start zh-bash
 $ python -m sagas.zh.ltp_checker procs '中国进出口银行与中国银行加强合作。'
 ```
 
+## duckling
+```sh
+run duckling  # alias run='docker-compose up'
+curl -XPOST http://0.0.0.0:8000/parse --data 'locale=zh_CN&text=上星期天' | json
+```
+
 

@@ -2,9 +2,10 @@ version: '2'
 
 services:
   duckling:
-    image: rasa/duckling:latest
+    # image: rasa/duckling:latest
+    image: registry.cn-hangzhou.aliyuncs.com/samlet/duckling:2019-12-22
     ports:
-    - "8000:8000"
+      - "8000:8000"
 
   serv_wordnet:
     image: registry.cn-hangzhou.aliyuncs.com/samlet/servant_wordnet:0.1

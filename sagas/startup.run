@@ -55,6 +55,9 @@ else
 	"push-stack")
 		push_image samlet/sagas_stack:0.1
 		;;
+	"push-duckling")
+		push_image samlet/duckling:2019-12-22
+		;;
 	"push-wordnet")
 		push_image samlet/sagas_wordnet:0.1
 		;;

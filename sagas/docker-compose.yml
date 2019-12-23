@@ -37,6 +37,14 @@ services:
     image: samlet/servant_zh:0.1
     ports:
       - 14005:14005
+  serv_ja:
+    image: samlet/servant_ja:0.1
+    ports:
+      - 14006:14006
+  serv_western:
+    image: samlet/servant_western:0.1
+    ports:
+      - 14007:14007
 
   ### agents and actions
   agent_servant:

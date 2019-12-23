@@ -101,6 +101,7 @@ else
 	"build-servants")
 		ensure_archive
 		docker build -t samlet/servant_zh:0.1 -f servant-zh.dockerfile .
+		docker build -t samlet/servant_ja:0.1 -f servant-ja.dockerfile .
 		docker build -t samlet/servant_wordnet:0.1 -f servant-wordnet.dockerfile .
 		docker build -t samlet/servant_stack:0.1 -f servant-stack.dockerfile .
 		;;
@@ -111,12 +112,23 @@ else
 	"build-ss")
 		docker build -t samlet/servant_stack:0.1 -f servant-stack.dockerfile .
 		;;
+	"build-ja")
+		ensure_archive
+		docker build -t samlet/servant_ja:0.1 -f servant-ja.dockerfile .
+		;;
+	"build-w")
+		ensure_archive
+		docker build -t samlet/servant_western:0.1 -f servant-western.dockerfile .
+		;;
 	"build-tool")
 		ensure_archive
 		docker build -t samlet/sagas_tool:0.1 -f sagas-tool.dockerfile .
 		;;
 	"build-zh")
 		docker build -t samlet/langpack_zh:0.1 -f langpack-zh.dockerfile .
+		;;
+	"build-western")
+		docker build -t samlet/langpack_western:0.1 -f langpack-western.dockerfile .
 		;;
 
 	"list")

@@ -17,6 +17,9 @@ $ python -m sagas.nlu.nlu_tools clip_parse id 'Kami tak boleh berbicara.'
 
 $ alias sid="python -m sagas.tool.misc trans_clip id 'en;zh-CN;ja' en False"
 $ sid 'Kami tak boleh berbicara.'
+$ sj "望遠鏡で泳いでいる少女を見た。"
+$ sd 'Wie untersuchen Sie diese Angelegenheit?'
+$ sd 'Eine Teilnahme ist kostenlos.'
 ```
 
 + zh

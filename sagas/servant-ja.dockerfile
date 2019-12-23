@@ -1,8 +1,6 @@
-FROM samlet/sagas_stack:0.1
+FROM yusanish/jumanpp_knp:latest
 
-RUN python -m spacy download en && \
-    python -m spacy download de
-RUN pip install python-json-config
+RUN pip install fire simplejson sanic pandas pyknp Flask cachetools PyYAML waitress
 
 ## == sources ==
 RUN mkdir -p /pi/
@@ -18,7 +16,6 @@ ENV PYTHONPATH="/pi/stack:/pi/ws/sagas-ai:$PYTHONPATH"
 WORKDIR /pi/stack
 ## == end ==
 
-EXPOSE 14000
-CMD python -m sagas.nlu.parse_servant run 14000
-
+EXPOSE 14006
+CMD python -m sagas.nlu.parse_servant run 14006
 

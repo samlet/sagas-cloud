@@ -44,6 +44,7 @@ services:
     volumes:
       - /pi/stack:/pi/stack
       - /pi/ws/sagas-ai:/pi/ws/sagas-ai
+      # - /pi/ws/sagas-ai/nlu_multilang/models:/pi/ws/sagas-ai/nlu_multilang/models
     environment:
       - runtime=docker
     ports:
@@ -51,11 +52,29 @@ services:
     working_dir: /pi/ws/sagas-ai
     command: python -m saai.agent_servant app
 
+  # bot with self-includeing nlu parser
   genesis_actions:
     image: rasa/rasa-sdk:latest
     volumes:
       - /pi/ws/sagas-ai/bots/genesis/actions:/app/actions
-
+  
+  # bot with multilang support
+  saya_actions:
+    image: rasa/rasa-sdk:latest
+    volumes:
+      - /pi/ws/sagas-ai/bots/saya/actions:/app/actions
+      - /pi/ws/sagas-ai/bots/saya/seed:/app/seed
+  saya_nlg:
+    image: samlet/servant_stack:0.1
+    working_dir: /pi/ws/sagas-ai
+    command: python -m saai.nlg.nlg_server --domain /pi/ws/sagas-ai/bots/saya/domain.yml
+  
+  nlu_multilang:
+    image: samlet/servant_stack:0.1
+    ports:
+      - 5009:5009
+    working_dir: /pi/ws/sagas-ai
+    command: python -m saai.multi_nlu_servant 
 
 
 

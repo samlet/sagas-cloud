@@ -1,5 +1,7 @@
 FROM samlet/sagas_stack:0.1
 
+RUN pip install python-json-config
+
 ## == sources ==
 RUN mkdir -p /pi/
 # add sources package content to target folder

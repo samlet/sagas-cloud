@@ -32,4 +32,35 @@ run duckling  # alias run='docker-compose up'
 curl -XPOST http://0.0.0.0:8000/parse --data 'locale=zh_CN&text=上星期天' | json
 ```
 
+## nlu & dm
+```sh
+$ python -m saai.saai_cli nlu_parse '附近有什么好吃的' zh
+$ python -m saai.saai_cli nlu_parse "Shenzhen ist das Silicon Valley für Hardware-Firmen" de
+
+$ python -m saai.saai_cli bot_message
+```
+
+## within docker-compose
+```sh
+$ alias runi='docker-compose exec'
+$ runi agent_servant bash
+> python -m saai.nlu_mod_procs train en
+> python -m saai.nlu_mod_procs train zh
+```
+
+## docker toolkits
+```sh
+# retrain and reload
+$ docker exec -it sagas_agent_servant_1 python -m saai.saai_cli nlu_reload en
+
+# only retrain
+$ docker exec -it sagas_agent_servant_1 python -m saai.nlu_mod_procs train en
+
+$ alias agents='docker exec -it sagas_agent_servant_1 python -m'
+
+# reload agent
+$ agents saai.saai_cli bot_reload genesis
+```
+
+
 

@@ -3,6 +3,8 @@
 # . /pi/bin/inc/matchers.sh
 # . /pi/bin/inc/docker_utils.sh
 
+. vars.sh
+
 function start_inventory(){
 	# mysqld: ready for connections.
 	start_docker inventory "$msg_mysql"
@@ -10,9 +12,14 @@ function start_inventory(){
 
 function push_image(){
 	local image=$1
-	docker tag $image registry.cn-hangzhou.aliyuncs.com/$image
-	docker push registry.cn-hangzhou.aliyuncs.com/$image
-	docker rmi registry.cn-hangzhou.aliyuncs.com/$image
+	echo "target hub: $target_hub"
+	if [ "$target_hub" == "docker" ]; then
+		docker push $image
+	else
+		docker tag $image registry.cn-hangzhou.aliyuncs.com/$image
+		docker push registry.cn-hangzhou.aliyuncs.com/$image
+		docker rmi registry.cn-hangzhou.aliyuncs.com/$image
+	fi
 }
 
 function archive_source(){
@@ -52,6 +59,9 @@ else
 		image=samlet/sagas_base:0.1
 		push_image $image
 		;;
+	"push-langprocs")
+		push_image samlet/langprocs:0.1
+		;;
 	"push-stack")
 		push_image samlet/sagas_stack:0.1
 		;;
@@ -68,6 +78,12 @@ else
 		;;
 	"push-zh")
 		push_image samlet/langpack_zh:0.1
+		;;
+	"push-ja")
+		push_image samlet/servant_ja:0.1
+		;;
+	"push-western")
+		push_image samlet/langpack_western:0.1
 		;;
 
 	"build-wordnet")

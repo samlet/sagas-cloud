@@ -20,6 +20,9 @@ $ sid 'Kami tak boleh berbicara.'
 $ sj "望遠鏡で泳いでいる少女を見た。"
 $ sd 'Wie untersuchen Sie diese Angelegenheit?'
 $ sd 'Eine Teilnahme ist kostenlos.'
+
+$ alias nluc='python -m sagas.nlu.nlu_tools clip_parse'
+$ nluc ja '格解析を行わず構文解析のみを行う'
 ```
 
 + zh

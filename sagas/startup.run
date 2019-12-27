@@ -70,6 +70,7 @@ else
 		;;
 	"push-wordnet")
 		push_image samlet/sagas_wordnet:0.1
+		push_image samlet/servant_wordnet:0.1
 		;;
 	"push-servants")
 		push_image samlet/servant_stack:0.1
@@ -120,6 +121,10 @@ else
 		docker build -t samlet/servant_ja:0.1 -f servant-ja.dockerfile .
 		docker build -t samlet/servant_wordnet:0.1 -f servant-wordnet.dockerfile .
 		docker build -t samlet/servant_stack:0.1 -f servant-stack.dockerfile .
+		;;
+	"rebuild-wordnet")
+		ensure_archive
+		docker build -t samlet/servant_wordnet:0.1 -f servant-wordnet.dockerfile .
 		;;
 	"rebuild-stack")
 		archive_source

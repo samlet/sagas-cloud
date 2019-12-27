@@ -1,11 +1,11 @@
-FROM samlet/sagas_base:0.1
+# FROM samlet/sagas_base:0.1
+FROM samlet/sagas_builder:0.1
 
-RUN pip install fire waitress simplejson clipboard graphviz
-RUN pip install honcho iso-639 kroman cyrtranslit
+RUN pip install nltk fire waitress simplejson iso-639 kroman cyrtranslit
 
-RUN apt-get update -qq \
- && apt-get install -y --no-install-recommends \
-    tree
+# RUN apt-get update -qq \
+#  && apt-get install -y --no-install-recommends \
+#     tree
 
 RUN mkdir -p /pi/ai/nltk/data
 # add data-nltk folder content to target folder

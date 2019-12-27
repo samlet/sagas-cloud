@@ -46,6 +46,28 @@ services:
     ports:
       - 14007:14007
 
+  langprocs:
+    image: samlet/langprocs:0.1
+  timeprocs:
+    image: samlet/timeprocs:0.1
+  # $ run info_stack ruleprocs
+  ruleprocs:
+    image: samlet/ruleprocs:0.1
+    ports:
+      - 4333:4333
+      - 4334:4334
+
+  info_stack:
+    image: samlet/servant_stack:0.1
+    ports:
+      - 1700:1700
+    volumes:
+      - /pi/stack:/pi/stack
+      - /pi/ws/sagas-ai:/pi/ws/sagas-ai
+    environment:
+      - runtime=docker
+    command: python -m sagas.api.info_stack run 1700 False
+
   ### agents and actions
   agent_servant:
     image: samlet/servant_stack:0.1

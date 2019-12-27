@@ -2,7 +2,7 @@ FROM samlet/sagas_stack:0.1
 
 RUN python -m spacy download en && \
     python -m spacy download de
-RUN pip install python-json-config
+RUN pip install python-json-config py4j
 
 ## == sources ==
 RUN mkdir -p /pi/

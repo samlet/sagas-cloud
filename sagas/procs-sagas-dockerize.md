@@ -38,6 +38,12 @@ run duckling  # alias run='docker-compose up'
 curl -XPOST http://0.0.0.0:8000/parse --data 'locale=zh_CN&text=上星期天' | json
 ```
 
+## ner
+```sh
+$ run info_stack ruleprocs
+$ python -m saai.saai_cli nlu_ner id "Jokowi pergi ke Singapura."
+```
+
 ## nlu & dm
 ```sh
 $ python -m saai.saai_cli nlu_parse '附近有什么好吃的' zh

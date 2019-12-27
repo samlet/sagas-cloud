@@ -1,5 +1,7 @@
 FROM samlet/sagas_wordnet:0.1
 
+RUN pip install Flask cachetools PyYAML
+
 ## == sources ==
 RUN mkdir -p /pi/
 # add sources package content to target folder

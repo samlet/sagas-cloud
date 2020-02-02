@@ -1,0 +1,34 @@
+#!/bin/bash
+# . /pi/bin/inc/wait_funcs.sh
+# . /pi/bin/inc/matchers.sh
+# . /pi/bin/inc/docker_utils.sh
+
+function start_inventory(){
+	# mysqld: ready for connections.
+	start_docker inventory "$msg_mysql"
+}
+
+# startup 
+if [ $# -lt 1 ]; then	
+	echo "available opts: all, zk, storm, repl, ..."
+else
+	CMD=$1
+	case "$CMD" in
+	"redis")
+		start_docker redis "$msg_redis"
+		;;
+	"testing")
+		wget -q --post-data "Although they didn't like it, they accepted the offer." \
+		  'localhost:9001/?properties={"annotators":"parse","outputFormat":"json"}' \
+		  -O - | jq ".sentences[0].parse"
+		;;
+	"parse")
+		python -m sagas.nlu.uni_cli parse stanford en 'it is a cat'
+		;;
+	*)
+		# default proc
+		handle_cmd ${@:1}
+		;;
+	esac
+fi
+

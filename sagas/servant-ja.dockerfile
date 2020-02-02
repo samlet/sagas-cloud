@@ -12,6 +12,7 @@ ADD sagas-saai-0.1.tar.gz /pi/ws/
 
 ENV PATH="/pi/stack:/pi/ws/sagas-ai:$PATH"
 ENV PYTHONPATH="/pi/stack:/pi/ws/sagas-ai:$PYTHONPATH"
+ENV runtime="docker"
 
 WORKDIR /pi/stack
 ## == end ==

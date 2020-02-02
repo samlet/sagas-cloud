@@ -29,12 +29,18 @@ services:
       - 8093:8093
 
   serv_stack:
-    image: samlet/servant_stack:0.1
+    image: samlet/servant_stack
+    build:
+      context: "."
+      dockerfile: servant-stack.dockerfile
     ports:
       - 14000:14000
 
   serv_zh:
-    image: samlet/servant_zh:0.1
+    image: samlet/servant_zh
+    build:
+      context: "."
+      dockerfile: servant-zh.dockerfile
     ports:
       - 14005:14005
   serv_ja:
@@ -58,25 +64,25 @@ services:
       - 4334:4334
 
   info_stack:
-    image: samlet/servant_stack:0.1
+    image: samlet/servant_stack
     ports:
       - 1700:1700
     volumes:
       - /pi/stack:/pi/stack
       - /pi/ws/sagas-ai:/pi/ws/sagas-ai
-    environment:
-      - runtime=docker
+    # environment:
+    #   - runtime=docker
     command: python -m sagas.api.info_stack run 1700 False
 
   ### agents and actions
   agent_servant:
-    image: samlet/servant_stack:0.1
+    image: samlet/servant_stack
     volumes:
       - /pi/stack:/pi/stack
       - /pi/ws/sagas-ai:/pi/ws/sagas-ai
       # - /pi/ws/sagas-ai/nlu_multilang/models:/pi/ws/sagas-ai/nlu_multilang/models
-    environment:
-      - runtime=docker
+    # environment:
+    #   - runtime=docker
     ports:
       - 18099:18099
     working_dir: /pi/ws/sagas-ai
@@ -95,12 +101,12 @@ services:
       - /pi/ws/sagas-ai/bots/saya/actions:/app/actions
       - /pi/ws/sagas-ai/bots/saya/seed:/app/seed
   saya_nlg:
-    image: samlet/servant_stack:0.1
+    image: samlet/servant_stack
     working_dir: /pi/ws/sagas-ai
     command: python -m saai.nlg.nlg_server --domain /pi/ws/sagas-ai/bots/saya/domain.yml
   
   nlu_multilang:
-    image: samlet/servant_stack:0.1
+    image: samlet/servant_stack
     ports:
       - 5009:5009
     working_dir: /pi/ws/sagas-ai

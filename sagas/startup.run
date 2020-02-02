@@ -105,6 +105,9 @@ else
 	"build-builder")
 		docker build -t samlet/sagas_builder:0.1 -f sagas-builder.dockerfile .
 		;;
+	"archive")
+		archive_source
+		;;
 	"build-source")
 		archive_source
 
@@ -119,6 +122,7 @@ else
 		ensure_archive
 		docker build -t samlet/servant_zh:0.1 -f servant-zh.dockerfile .
 		docker build -t samlet/servant_ja:0.1 -f servant-ja.dockerfile .
+		docker build -t samlet/servant_western:0.1 -f servant-western.dockerfile .
 		docker build -t samlet/servant_wordnet:0.1 -f servant-wordnet.dockerfile .
 		docker build -t samlet/servant_stack:0.1 -f servant-stack.dockerfile .
 		;;

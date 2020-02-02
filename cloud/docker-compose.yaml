@@ -3,21 +3,21 @@ version: '2'
 services:
   duckling:
     # image: rasa/duckling:latest
-    image: registry.cn-hangzhou.aliyuncs.com/samlet/duckling:2019-12-22
+    image: samlet/duckling:2019-12-22
     ports:
       - "8000:8000"
 
   serv_wordnet:
-    image: registry.cn-hangzhou.aliyuncs.com/samlet/servant_wordnet:0.1
+    image: samlet/servant_wordnet:0.1
     ports:
       - 8093:8093
       
   serv_stack:
-    image: registry.cn-hangzhou.aliyuncs.com/samlet/servant_stack:0.1
+    image: samlet/servant_stack:0.1
     ports:
       - 14000:14000
 
   serv_zh:
-    image: registry.cn-hangzhou.aliyuncs.com/samlet/servant_zh:0.1
+    image: samlet/servant_zh:0.1
     ports:
       - 14005:14005

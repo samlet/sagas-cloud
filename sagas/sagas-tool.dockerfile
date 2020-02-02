@@ -23,9 +23,12 @@ RUN apt-get install -y --no-install-recommends \
     python-numpy \
     libicu-dev
 
-RUN pip install fire simplejson graphviz py4j pyicu morfessor pycld2 polyglot PyExecJS bs4 sanic pandas streamlit
+# better to add --no-cache-dir: RUN pip install --no-cache-dir jupyter
+RUN pip install fire simplejson graphviz py4j \
+    pyicu morfessor pycld2 polyglot \
+    PyExecJS bs4 sanic pandas streamlit
 
-RUN pip install kroman cyrtranslit iso-639 
+RUN pip install kroman cyrtranslit iso-639 jupyter
 
 ## == sources ==
 RUN mkdir -p /pi/
@@ -37,6 +40,7 @@ ADD sagas-saai-0.1.tar.gz /pi/ws/
 
 ENV PATH="/pi/stack:/pi/ws/sagas-ai:$PATH"
 ENV PYTHONPATH="/pi/stack:/pi/ws/sagas-ai:$PYTHONPATH"
+ENV runtime="docker"
 
 WORKDIR /pi/stack
 
